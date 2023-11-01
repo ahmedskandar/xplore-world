@@ -29,6 +29,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"], //Allows type in TypeScript, display error otherwise
   },
   settings: {
     react: {
