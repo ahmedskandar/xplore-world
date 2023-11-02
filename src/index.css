@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  font-family: Montserrat, sans-serif
+body {
+  font-family: Montserrat, sans-serif;
 }
 
 @layer components {
   .button-primary {
     @apply rounded-md bg-gradient-primary px-4 py-2 font-bold;
+  }
+  .hover-effect {
+    @apply transition group-hover:text-white group-hover:duration-300;
   }
 }
