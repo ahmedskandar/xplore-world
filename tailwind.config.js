@@ -6,6 +6,9 @@ export default {
       backgroundImage: {
         "gradient-primary": `linear-gradient(to right, #009ACD, #2ECC71)`,
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
     },
   },
   plugins: [],
