@@ -5,3 +5,4 @@ export type ChildrenPropsType = {
 };
 
 export type LinkType = React.ComponentPropsWithoutRef<typeof Link>;
+export type ButtonType = React.ComponentPropsWithoutRef<"button">;
