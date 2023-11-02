@@ -12,7 +12,8 @@ const VideoBackgroundLayout = ({ children }: ChildrenPropsType) => {
         <source src="/assets/videos/xplore-video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="absolute left-0 top-0 h-full w-full bg-black/40"></div>
+      {/* Overlay */}
+      <div className="absolute left-0 top-0 h-full w-full bg-black/70"></div>
       {children}
     </section>
   );
