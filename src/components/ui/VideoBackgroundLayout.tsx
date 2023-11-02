@@ -9,7 +9,7 @@ const VideoBackgroundLayout = ({ children }: ChildrenPropsType) => {
         muted
         className="absolute left-0 top-0 h-full w-full object-cover sm:text-white"
       >
-        <source src="/assets/videos/xplore-video.mp4" type="video/mp4" />
+        <source src="/assets/videos/xplore-video-short.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       {/* Overlay */}
