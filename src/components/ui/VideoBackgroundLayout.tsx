@@ -2,7 +2,7 @@ import { ChildrenPropsType } from "../../lib/types";
 
 const VideoBackgroundLayout = ({ children }: ChildrenPropsType) => {
   return (
-    <section className="absolute right-0 h-[100svh] w-screen">
+    <section className="absolute right-0 min-h-[100svh] w-screen">
       <video
         autoPlay
         loop
