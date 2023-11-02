@@ -4,6 +4,6 @@
 
 @layer components {
   .button-primary {
-    @apply rounded-md bg-gradient-primary px-4 py-2 font-bold transition hover:text-black hover:duration-300;
+    @apply rounded-md bg-gradient-primary px-4 py-2 font-bold;
   }
 }
