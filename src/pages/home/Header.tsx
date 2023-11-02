@@ -3,7 +3,7 @@ import Nav from "./Nav";
 
 const Header = () => {
   return (
-    <header className="relative flex justify-between p-12 text-white">
+    <header className="relative flex justify-between p-12">
       <Logo />
       <Nav />
     </header>
