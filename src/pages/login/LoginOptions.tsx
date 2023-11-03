@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { LoginOptionsType } from "../../lib/types";
 
-const LoginOptions = ({onCheckboxChange}: LoginOptionsType) => {
+const LoginOptions = ({ onCheckboxChange }: LoginOptionsType) => {
   return (
     <div className="flex justify-between">
-      <label className="flex items-center gap-1">
+      <label htmlFor="checkbox" className="flex items-center gap-1">
         <input
+          id="checkbox"
           type="checkbox"
           className="cursor-pointer accent-[#009ACD]"
           onChange={onCheckboxChange}
