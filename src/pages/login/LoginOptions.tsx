@@ -1,26 +1,22 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { LoginOptionsType } from "../../lib/types";
 
-const LoginOptions = () => {
-     const [isChecked, setIsChecked] = useState(false);
-
-     const handleCheckboxChange = () => {
-       setIsChecked(!isChecked);
-     };
+const LoginOptions = ({onCheckboxChange}: LoginOptionsType) => {
   return (
-    <div className="flex justify-between">
+    <div className="mb-3 flex justify-between">
       <label className="flex items-center gap-1">
         <input
           type="checkbox"
-          className="accent-[#009ACD]"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
+          className="cursor-pointer accent-[#009ACD]"
+          onChange={onCheckboxChange}
         />
         <span className="cursor-pointer">Remember me</span>
       </label>
-      <Link to={"/reset"}>Forgot password?</Link>
+      <Link className="hover:underline" to={"/reset"}>
+        Forgot password?
+      </Link>
     </div>
   );
-}
+};
 
-export default LoginOptions
+export default LoginOptions;
