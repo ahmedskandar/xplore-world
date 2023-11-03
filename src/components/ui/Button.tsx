@@ -6,7 +6,11 @@ const Button = ({
   children,
 }: ButtonType & ChildrenPropsType) => {
   return (
-    <button className={"bg-gradient-primary"} type={type} onClick={onClick}>
+    <button
+      className={"button-primary group space-x-2"}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
