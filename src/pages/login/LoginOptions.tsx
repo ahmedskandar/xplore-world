@@ -3,7 +3,7 @@ import { LoginOptionsType } from "../../lib/types";
 
 const LoginOptions = ({onCheckboxChange}: LoginOptionsType) => {
   return (
-    <div className="mb-3 flex justify-between">
+    <div className="flex justify-between">
       <label className="flex items-center gap-1">
         <input
           type="checkbox"
