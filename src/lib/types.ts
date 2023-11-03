@@ -6,3 +6,5 @@ export type ChildrenPropsType = {
 
 export type LinkType = React.ComponentPropsWithoutRef<typeof Link>;
 export type ButtonType = React.ComponentPropsWithoutRef<"button">;
+
+export type PromptLinkType = ChildrenPropsType & { type: "login" | "signup" };
