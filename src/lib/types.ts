@@ -6,6 +6,8 @@ export type ChildrenPropsType = {
 
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
+export type FormSubmissionEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
 export type LinkType = React.ComponentPropsWithoutRef<typeof Link>;
 
 export type ButtonType = React.ComponentPropsWithoutRef<"button">;
