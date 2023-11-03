@@ -15,3 +15,5 @@ export type PromptLinkType = { type: "login" | "signup" };
 export type InputType = React.ComponentPropsWithoutRef<"input"> & {
   label: string;
 };
+
+export type LoginOptionsType = {onCheckboxChange: () => void}
