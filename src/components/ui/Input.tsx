@@ -9,7 +9,7 @@ const Input = ({ label, onChange }: InputType) => {
       <label htmlFor="input">{label}</label>
       <input
         onChange={onChange}
-        className="w-full rounded-sm border border-[#cecece] p-2 focus:shadow-md focus:outline-[#2ECC71]"
+        className="w-full rounded-sm border border-[#cecece] p-2 focus:shadow-md focus:outline-none focus:border-[#2ECC71]"
       />
     </div>
   );
