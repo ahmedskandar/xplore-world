@@ -4,7 +4,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const LandingContent = () => {
   return (
-    <main className="absolute flex w-full justify-center">
+    <main className="relative flex w-full justify-center my-5">
       <div className="mx-5 mt-8 flex w-full flex-col items-center justify-center rounded-lg bg-black/80 p-6 text-center sm:w-4/5 sm:p-10 lg:w-3/5 lg:px-5 lg:py-14">
         <h1 className="bg-gradient-primary bg-clip-text pb-2 text-2xl font-bold text-transparent sm:text-3xl md:text-4xl xl:text-5xl">
           MAP Your Journey, <br />
