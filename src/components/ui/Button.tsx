@@ -5,6 +5,7 @@ const Button = ({
   onClick,
   children,
 }: ButtonType & ChildrenPropsType) => {
+  if (!onClick) throw new Error("The onClick prop is not passed");
   return (
     <button
       className={"button-primary group space-x-2"}
