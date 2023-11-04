@@ -11,7 +11,9 @@ const LoginOptions = ({ onCheckboxChange }: LoginOptionsType) => {
           className="cursor-pointer accent-[#009ACD]"
           onChange={onCheckboxChange}
         />
-        <span className="cursor-pointer">Remember me</span>
+        <span className="cursor-pointer select-none">
+          Remember me
+        </span>
       </label>
       <Link className="hover:underline" to={"/reset"}>
         Forgot password?
