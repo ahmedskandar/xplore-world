@@ -16,9 +16,11 @@ export const validateEmail = <T>(
   if (!isEmailValid())
     return setError((prevState) => ({
       ...prevState,
-      password: "",
+      password: "", //When email is right, pasword is wrong and then email is wrong, only the email be highlighted in red
       email: "Please fill in a correct email",
     }));
+
+  return true; //If it passes all checks
 };
 
 export const validatePassword = <T>(
@@ -35,4 +37,6 @@ export const validatePassword = <T>(
       ...prevState,
       password: "Password length should be greater than 8",
     }));
+
+  return true; //If it passes all checks
 };
