@@ -10,6 +10,7 @@ import Input from "../../components/ui/Input";
 import { FormSubmissionEvent, InputChangeEvent } from "../../lib/types";
 import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
+import Form from "../../components/ui/Form";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const LoginForm = () => {
         <Logo />
       </div>
       <HeadingText>Login</HeadingText>
-      <form className="mt-8 flex flex-col gap-8">
+      <Form>
         <Input
           error={error.email}
           type="email"
@@ -107,7 +108,7 @@ const LoginForm = () => {
           <FontAwesomeIcon className="hover-effect" icon={faPowerOff} />
         </Button>
         <PromptLink type="login" />
-      </form>
+      </Form>
     </div>
   );
 };
