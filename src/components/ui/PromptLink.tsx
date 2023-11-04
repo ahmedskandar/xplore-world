@@ -5,7 +5,7 @@ const PromptLink = ({ type }: PromptLinkType) => {
   return type === "login" ? (
     <p>
       Don&apos;t have an account? Click{" "}
-      <Link className="underline" to={"signup"}>
+      <Link className="underline" to={"/signup"}>
         here
       </Link>{" "}
       to sign up
@@ -13,7 +13,7 @@ const PromptLink = ({ type }: PromptLinkType) => {
   ) : (
     <p>
       Already have an account? Click{" "}
-      <Link className=" underline" to={"login"}>
+      <Link className=" underline" to={"/login"}>
         here
       </Link>{" "}
       to login
