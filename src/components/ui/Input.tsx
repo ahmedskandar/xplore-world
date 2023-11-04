@@ -15,7 +15,7 @@ const Input = ({ label, onChange, type, error }: InputType) => {
         id={uniqueInputId.replace(/:/g, "_")}
         type={type}
         onChange={onChange}
-        className={`w-full rounded-sm border border-[#cecece] p-2 ${
+        className={`input ${
           error && "border-red-500"
         }  focus:border-[#2ECC71] focus:shadow-md focus:outline-none`}
       />

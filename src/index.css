@@ -13,4 +13,7 @@ body {
   .hover-effect {
     @apply transition group-hover:text-white group-hover:duration-300;
   }
+  .input {
+    @apply w-full rounded-sm border border-[#cecece] p-2 
+  }
 }
