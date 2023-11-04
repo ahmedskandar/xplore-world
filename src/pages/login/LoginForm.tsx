@@ -11,6 +11,7 @@ import { FormSubmissionEvent, InputChangeEvent } from "../../lib/types";
 import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
 import Form from "../../components/ui/Form";
+import { validateEmail, validatePassword } from "../../utils/ValidationUtil";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -37,34 +38,11 @@ const LoginForm = () => {
 
   const testInput = { email: "itsahmedlukman@gmail.com", password: "12345678" };
 
-  const isEmailValid = (): boolean => {
-    const regex = /^.+@.+\..+$/; // Regular expression to check for "@" followed by some text and then a dot and more text
-    return regex.test(email);
-  };
-
   const handleFormSubmission = (e: FormSubmissionEvent) => {
     e.preventDefault();
-    if (!email || email.trim().length === 0)
-      return setError((prevState) => ({
-        ...prevState,
-        email: "Please fill in the email field",
-      }));
-    if (!isEmailValid())
-      return setError((prevState) => ({
-        ...prevState,
-        password: "",
-        email: "Please fill in a correct email",
-      }));
-    if (!password || password.trim().length === 0)
-      return setError((prevState) => ({
-        ...prevState,
-        password: "Please fill in the password field",
-      }));
-    if (password.length < 8)
-      return setError((prevState) => ({
-        ...prevState,
-        password: "Password length should be greater than 8",
-      }));
+
+    validateEmail(email, setError);
+    validatePassword(password, setError);
 
     const input = { email, password, isChecked };
 
