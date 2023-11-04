@@ -41,8 +41,8 @@ const LoginForm = () => {
   const handleFormSubmission = (e: FormSubmissionEvent) => {
     e.preventDefault();
 
-    validateEmail(email, setError);
-    validatePassword(password, setError);
+    if (!validateEmail(email, setError)) return;
+    if (!validatePassword(password, setError)) return;
 
     const input = { email, password, isChecked };
 
