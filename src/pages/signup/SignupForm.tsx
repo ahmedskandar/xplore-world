@@ -86,6 +86,10 @@ const SignupForm = () => {
     if (isFormSubmitted) navigate("/login");
   }, [registrationError, navigate, isFormSubmitted]);
 
+  useEffect(() => {
+    dispatch({type: ACTION_TYPE.RESET_ERROR})
+  }, [dispatch])
+
   return (
     <div className="mx-auto max-w-md px-8 py-8 md:basis-1/2">
       <div className="mb-10 flex justify-center">
