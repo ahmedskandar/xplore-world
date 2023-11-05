@@ -98,7 +98,7 @@ const SignupForm = () => {
       <HeadingText>Sign up</HeadingText>
       <Form>
         <Input
-          error={error.email}
+          error={error.email || registrationError}
           type="email"
           label="Enter your email:"
           onChange={emailInputChangeHandler}
