@@ -12,14 +12,19 @@ export type FormSubmissionEvent = React.MouseEvent<
 >;
 
 export type LinkType = React.ComponentPropsWithoutRef<typeof Link>;
-
 export type ButtonType = React.ComponentPropsWithoutRef<"button">;
-
-export type PromptLinkType = { type: "login" | "signup" };
+export type SelectType = React.ComponentPropsWithoutRef<"select">;
 
 export type InputType = React.ComponentPropsWithoutRef<"input"> & {
   label: string;
-  error: string
+  error: string;
 };
+
+export type PromptLinkType = { type: "login" | "signup" };
+
+export type NationalitySelect = SelectType & {
+  select: string
+  error: string
+}
 
 export type LoginOptionsType = { onCheckboxChange: () => void };
