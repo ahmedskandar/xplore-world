@@ -60,10 +60,12 @@ export type AuthContextType = {
 export type AuthAction =
   | { type: "SIGN_UP"; payload: Usertype }
   | { type: "LOGIN"; payload: Omit<Usertype, "nationality"> }
-  | { type: "LOGOUT" };
+  | { type: "LOGOUT" }
+  | { type: "RESET_ERROR"}
 
 export enum ACTION_TYPE {
   USER_SIGNUP = "SIGN_UP",
   USER_LOGIN = "LOGIN",
   USER_LOGOUT = "LOGOUT",
+  RESET_ERROR = "RESET_ERROR"
 }
