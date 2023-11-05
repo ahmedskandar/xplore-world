@@ -7,7 +7,11 @@ import Logo from "../../components/ui/Logo";
 import { faSignIn } from "@fortawesome/free-solid-svg-icons";
 import PromptLink from "../../components/ui/PromptLink";
 import NationalitySelect from "./NationalitySelect";
-import { FormSubmissionEvent, InputChangeEvent, SelectChangeEvent } from "../../lib/types";
+import {
+  FormSubmissionEvent,
+  InputChangeEvent,
+  SelectChangeEvent,
+} from "../../lib/types";
 import {
   validateEmail,
   validatePassword,
@@ -15,8 +19,11 @@ import {
 } from "../../utils/ValidationUtil";
 import { useState } from "react";
 import Error from "../../components/ui/Error";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [select, setSelect] = useState("");
@@ -45,6 +52,8 @@ const SignupForm = () => {
     if (!validatePassword(password, setError)) return;
     if (!validateSelect(select, setError)) return;
     console.log({ select, email, password });
+
+    navigate("/login")
   };
 
   return (
