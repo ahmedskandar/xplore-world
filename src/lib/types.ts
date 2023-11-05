@@ -24,8 +24,46 @@ export type InputType = React.ComponentPropsWithoutRef<"input"> & {
 export type PromptLinkType = { type: "login" | "signup" };
 
 export type NationalitySelect = SelectType & {
-  select: string
-  error: string
-}
+  select: string;
+  error: string;
+};
 
 export type LoginOptionsType = { onCheckboxChange: () => void };
+
+//CONTEXT AND REDUCER TYPES
+
+export type DispatchType<T> = React.Dispatch<T>;
+
+export type DispatchActionType = {
+  type: string;
+  payload?: string | number | object;
+};
+
+export type Usertype = {
+  email: string;
+  password: string;
+  nationality: string;
+};
+
+export type AuthState = {
+  users: Usertype[];
+  user: Usertype | null;
+  isLoggedIn: boolean;
+  registrationError: string
+};
+
+export type AuthContextType = {
+  state: AuthState;
+  dispatch: DispatchType<AuthAction>;
+};
+
+export type AuthAction =
+  | { type: "SIGN_UP"; payload: Usertype }
+  | { type: "LOGIN"; payload: Omit<Usertype, "nationality"> }
+  | { type: "LOGOUT" };
+
+export enum ACTION_TYPE {
+  USER_SIGNUP = "SIGN_UP",
+  USER_LOGIN = "LOGIN",
+  USER_LOGOUT = "LOGOUT",
+}
