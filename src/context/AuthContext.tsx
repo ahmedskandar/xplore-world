@@ -54,7 +54,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         return {
           ...state,
           registrationError:
-            "Email already registered. Please use a different email.",
+            "Email already registered, please use a different email.",
         };
       } else {
         // alert("New user proceed");
@@ -69,6 +69,27 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         ...state,
         registrationError: "", // Clear any previous registration error
       };
+
+    case ACTION_TYPE.USER_LOGIN:
+      userAlreadyRegistered = state.users.find(
+        (user) =>
+          user.email === action.payload.email &&
+          user.password === action.payload.password,
+      );
+
+      if (userAlreadyRegistered)
+        return {
+          ...state,
+          isLoggedIn: true,
+          user: userAlreadyRegistered,
+          registrationError: ""
+        };
+      else {
+        return {
+          ...state,
+          registrationError: "Invalid credentials, please try again",
+        };
+      }
 
     default:
       throw new Error("Uknown action");

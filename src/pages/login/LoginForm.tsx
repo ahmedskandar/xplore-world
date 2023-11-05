@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/ui/Button";
 import Logo from "../../components/ui/Logo";
 import LoginOptions from "./LoginOptions";
@@ -7,14 +7,23 @@ import HeadingText from "../../components/ui/HeadingText";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Input from "../../components/ui/Input";
-import { FormSubmissionEvent, InputChangeEvent } from "../../lib/types";
+import {
+  ACTION_TYPE,
+  FormSubmissionEvent,
+  InputChangeEvent,
+} from "../../lib/types";
 import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
 import Form from "../../components/ui/Form";
 import { validateEmail, validatePassword } from "../../utils/ValidationUtil";
+import useAuth from "../../hooks/useAuth";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const {
+    state: { isLoggedIn, registrationError },
+    dispatch,
+  } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,15 +37,15 @@ const LoginForm = () => {
   };
 
   const emailInputChangeHandler = (e: InputChangeEvent) => {
+    dispatch({ type: "RESET_ERROR" });
     error.email && setError(initialErrorState);
     setEmail(e.target.value);
   };
   const passwordInputChangeHandler = (e: InputChangeEvent) => {
+    dispatch({ type: "RESET_ERROR" });
     error.password && setError(initialErrorState);
     setPassword(e.target.value);
   };
-
-  const testInput = { email: "itsahmedlukman@gmail.com", password: "12345678" };
 
   const handleFormSubmission = (e: FormSubmissionEvent) => {
     e.preventDefault();
@@ -44,20 +53,15 @@ const LoginForm = () => {
     if (!validateEmail(email, setError)) return;
     if (!validatePassword(password, setError)) return;
 
-    const input = { email, password, isChecked };
+    const USER_INPUT = { email, password, isChecked };
 
-    if (
-      input.email !== testInput.email ||
-      input.password !== testInput.password
-    )
-      return setError((prevState) => ({
-        ...prevState,
-        email: "Invalid credentials, please try again",
-        password: "Invalid credentials, please try again",
-      }));
-
-    navigate("/app/travels");
+    dispatch({ type: ACTION_TYPE.USER_LOGIN, payload: USER_INPUT });
   };
+
+  useEffect(() => {
+    if (isLoggedIn) navigate("/app/travels", { replace: true });
+  }, [isLoggedIn, navigate]);
+
   // px-36 py-10sm
   return (
     <div className="order-2 mx-auto max-w-md px-8 py-8 md:order-1 md:basis-1/2">
@@ -78,8 +82,8 @@ const LoginForm = () => {
           onChange={passwordInputChangeHandler}
         />
         <LoginOptions onCheckboxChange={handleCheckboxChange} />
-        {(error.email || error.password) && (
-          <Error>{error.email || error.password}</Error>
+        {(error.email || error.password || registrationError) && (
+          <Error>{error.email || error.password || registrationError}</Error>
         )}
         <Button onClick={handleFormSubmission}>
           <span className="hover-effect">Login</span>
