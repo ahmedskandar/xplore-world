@@ -5,6 +5,7 @@ export type ChildrenPropsType = {
 };
 
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>;
 
 export type FormSubmissionEvent = React.MouseEvent<
   HTMLButtonElement,
