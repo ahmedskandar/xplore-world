@@ -8,6 +8,7 @@ import { faSignIn } from "@fortawesome/free-solid-svg-icons";
 import PromptLink from "../../components/ui/PromptLink";
 import NationalitySelect from "./NationalitySelect";
 import {
+  ACTION_TYPE,
   FormSubmissionEvent,
   InputChangeEvent,
   SelectChangeEvent,
@@ -17,31 +18,42 @@ import {
   validatePassword,
   validateSelect,
 } from "../../utils/ValidationUtil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const SignupForm = () => {
   const navigate = useNavigate();
 
+  const {
+    state: { registrationError },
+    dispatch,
+  } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [select, setSelect] = useState("");
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const initialErrorState = { email: "", password: "", select: "" };
   const [error, setError] = useState(initialErrorState);
 
   const emailInputChangeHandler = (e: InputChangeEvent) => {
+    if (registrationError) {
+      setIsFormSubmitted(false);
+      dispatch({ type: "RESET_ERROR" });
+    }
     error.email && setError(initialErrorState);
     setEmail(e.target.value);
   };
   const passwordInputChangeHandler = (e: InputChangeEvent) => {
-    error.password && setError(initialErrorState);
+    error.password && setError((prevState) => ({ ...prevState, password: "" }));
     setPassword(e.target.value);
   };
 
   const handleSelectChange = (e: SelectChangeEvent) => {
-    error.select && setError(initialErrorState);
+    error.select && setError((prevState) => ({ ...prevState, select: "" }));
     setSelect(e.target.value);
   };
 
@@ -51,10 +63,28 @@ const SignupForm = () => {
     if (!validateEmail(email, setError)) return;
     if (!validatePassword(password, setError)) return;
     if (!validateSelect(select, setError)) return;
-    console.log({ select, email, password });
 
-    navigate("/login")
+    const userInput = {
+      email,
+      password,
+      nationality: select,
+    };
+
+    dispatch({ type: ACTION_TYPE.USER_SIGNUP, payload: userInput });
+    setIsFormSubmitted(true);
+
+    // Check for registration error after dispatching the action
+
+    // Registration was successful, navigate or perform other actions
   };
+
+  useEffect(() => {
+    // Check for registration error after the state has updated
+    if (registrationError) {
+      return;
+    }
+    if (isFormSubmitted) navigate("/login");
+  }, [registrationError, navigate, isFormSubmitted]);
 
   return (
     <div className="mx-auto max-w-md px-8 py-8 md:basis-1/2">
@@ -79,8 +109,13 @@ const SignupForm = () => {
           onChange={handleSelectChange}
           select={select}
         />
-        {(error.email || error.password || error.select) && (
-          <Error>{error.email || error.password || error.select}</Error>
+        {(error.email ||
+          error.password ||
+          error.select ||
+          registrationError) && (
+          <Error>
+            {error.email || error.password || error.select || registrationError}
+          </Error>
         )}
         <Button onClick={handleFormSubmission}>
           <span className="hover-effect">Sign up</span>
