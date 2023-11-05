@@ -10,14 +10,14 @@ import {
 
 // Sample array of users
 const users: Usertype[] = [
-  { email: "user1@example.com", password: "password1", nationality: "US" },
+  { email: "user1@example.com", password: "password1", nationality: "CA" },
   { email: "user2@example.com", password: "password2", nationality: "UK" },
   // Add more users as needed
 ];
 
 // Initial State of the Auth reducer
 const initialState: AuthState = {
-  users: users,
+  users,
   user: null,
   isLoggedIn: false,
   registrationError: "",
@@ -27,28 +27,60 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   let userAlreadyRegistered;
   switch (action.type) {
     case ACTION_TYPE.USER_SIGNUP:
-      userAlreadyRegistered = state.users.find(
+      // Check if the user is already registered
+      userAlreadyRegistered = state.users.some(
         (user) => user.email === action.payload.email,
       );
+
+      //    userAlreadyRegistered
+      //     ?  alert("Error: user has already reg") : alert("New user Proceed")
+
+      //This condition works as expected
+      //   return userAlreadyRegistered
+      //     ? {
+      //         ...state,
+      //         registrationError:
+      //           "Email is already registered. Please use a different email.",
+      //       }
+      //     : {
+      //         ...state,
+      //         users: [...state.users, action.payload],
+      //         registrationError: "", // Clear any previous registration error
+      //       };
+
+      //This condition works as expected
       if (userAlreadyRegistered) {
+        // alert("User has already registered");
         return {
           ...state,
           registrationError:
-            "Email is already registered. Please use a different email.",
+            "Email already registered. Please use a different email.",
+        };
+      } else {
+        // alert("New user proceed");
+        return {
+          ...state,
+          users: [...state.users, action.payload],
+          registrationError: "", // Clear any previous registration error
         };
       }
+    case ACTION_TYPE.RESET_ERROR:
       return {
         ...state,
-        users: [...state.users, action.payload],
         registrationError: "", // Clear any previous registration error
       };
-    // Handle other action cases here
+
     default:
-      return state;
+      throw new Error("Uknown action");
   }
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>({
+  state: initialState,
+  dispatch: () => {
+    /* Placeholder dispatch function */
+  },
+});
 
 export const AuthProvider = ({ children }: ChildrenPropsType) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
