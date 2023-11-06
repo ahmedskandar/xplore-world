@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Button from "../../components/ui/Button";
 import Logo from "../../components/ui/Logo";
 import LoginOptions from "./LoginOptions";
@@ -19,7 +19,7 @@ import useAuth from "../../hooks/useAuth";
 
 const LoginForm = () => {
   const {
-    state: {  registrationError },
+    state: { registrationError },
     dispatch,
   } = useAuth();
 
@@ -56,7 +56,9 @@ const LoginForm = () => {
     dispatch({ type: ACTION_TYPE.USER_LOGIN, payload: USER_INPUT });
   };
 
-  
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_TYPE.RESET_ERROR });
+  }, [dispatch]);
 
   // px-36 py-10sm
   return (
