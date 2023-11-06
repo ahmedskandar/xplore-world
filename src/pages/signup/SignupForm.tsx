@@ -6,7 +6,7 @@ import Input from "../../components/ui/Input";
 import Logo from "../../components/ui/Logo";
 import { faSignIn } from "@fortawesome/free-solid-svg-icons";
 import PromptLink from "../../components/ui/PromptLink";
-import NationalitySelect from "./NationalitySelect";
+import CountrySelect from "./CountrySelect";
 import {
   ACTION_TYPE,
   FormSubmissionEvent,
@@ -108,7 +108,7 @@ const SignupForm = () => {
           label="Enter your password:"
           onChange={passwordInputChangeHandler}
         />
-        <NationalitySelect
+        <CountrySelect
           error={error.select}
           onChange={handleSelectChange}
           select={select}

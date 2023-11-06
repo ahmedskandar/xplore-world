@@ -1,6 +1,6 @@
 import { NationalitySelect } from "../../lib/types";
 
-const NationalitySelect = ({ onChange, select, error }: NationalitySelect) => {
+const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
     if (!onChange) throw new Error("The onChange function should be defined");
   return (
     <div className="space-y-2">
@@ -21,4 +21,4 @@ const NationalitySelect = ({ onChange, select, error }: NationalitySelect) => {
   );
 };
 
-export default NationalitySelect;
+export default CountrySelect;
