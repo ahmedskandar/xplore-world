@@ -18,7 +18,7 @@ import {
   validatePassword,
   validateSelect,
 } from "../../utils/ValidationUtil";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
@@ -86,9 +86,9 @@ const SignupForm = () => {
     if (isFormSubmitted) navigate("/login");
   }, [registrationError, navigate, isFormSubmitted]);
 
-  useEffect(() => {
-    dispatch({type: ACTION_TYPE.RESET_ERROR})
-  }, [dispatch])
+  useLayoutEffect(() => {
+    dispatch({ type: ACTION_TYPE.RESET_ERROR });
+  }, [dispatch]);
 
   return (
     <div className="mx-auto max-w-md px-8 py-8 md:basis-1/2">
