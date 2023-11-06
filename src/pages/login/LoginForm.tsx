@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../components/ui/Button";
 import Logo from "../../components/ui/Logo";
 import LoginOptions from "./LoginOptions";
@@ -13,15 +13,13 @@ import {
   InputChangeEvent,
 } from "../../lib/types";
 import Error from "../../components/ui/Error";
-import { useNavigate } from "react-router-dom";
 import Form from "../../components/ui/Form";
 import { validateEmail, validatePassword } from "../../utils/ValidationUtil";
 import useAuth from "../../hooks/useAuth";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const {
-    state: { isLoggedIn, registrationError },
+    state: {  registrationError },
     dispatch,
   } = useAuth();
 
@@ -58,9 +56,7 @@ const LoginForm = () => {
     dispatch({ type: ACTION_TYPE.USER_LOGIN, payload: USER_INPUT });
   };
 
-  useEffect(() => {
-    if (isLoggedIn) navigate("/app/travels", { replace: true });
-  }, [isLoggedIn, navigate]);
+  
 
   // px-36 py-10sm
   return (
