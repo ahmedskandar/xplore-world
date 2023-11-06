@@ -69,3 +69,8 @@ export enum ACTION_TYPE {
   USER_LOGOUT = "LOGOUT",
   RESET_ERROR = "RESET_ERROR"
 }
+
+export type CountryDataType = {
+  value: string,
+  key: string
+}[]
