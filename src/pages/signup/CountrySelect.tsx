@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { CountryDataType, NationalitySelect } from "../../lib/types";
 import { apiKey } from "../../data/constants";
+import { useFetch } from "../../hooks/useFetch";
 
 const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
   if (!onChange) throw new Error("The onChange function should be defined");
 
   const [countries, setCountries] = useState<CountryDataType>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "https://referential.p.rapidapi.com/v1/country";
-      const headers = new Headers();
-      headers.append("X-RapidAPI-Key", apiKey ?? "");
-      headers.append("X-RapidAPI-Host", "referential.p.rapidapi.com");
-
-      try {
-        const response = await fetch(url, { method: "GET", headers });
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-        const data = (await response.json()) as CountryDataType;
-        setCountries(data);
-      } catch (e) {
-        if (e instanceof Error) {
-          throw new Error(e.message);
-        } else {
-          throw e; // re-throw the error if it's not an instance of Error
-        }
-      }
-    };
-
-    void fetchData();
+  const handleCountryChange = useCallback((countriesData: CountryDataType) => {
+    setCountries(countriesData);
   }, []);
+
+  const url = "https://referential.p.rapidapi.com/v1/country";
+  const headers = useMemo(() => {
+    return new Headers({
+      "X-RapidAPI-Key": apiKey ?? "",
+      "X-RapidAPI-Host": "referential.p.rapidapi.com",
+    });
+  }, []);
+  useFetch(url, headers, handleCountryChange);
 
   return (
     <div className="space-y-2">
