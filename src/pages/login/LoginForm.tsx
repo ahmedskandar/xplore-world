@@ -15,7 +15,7 @@ import {
 import Form from "../../components/ui/Form";
 import { validateEmail, validatePassword } from "../../utils/ValidationUtil";
 import useAuth from "../../hooks/useAuth";
-import ErrorText from "../../components/ui/Error";
+import ErrorText from "../../components/ui/ErrorText";
 
 const LoginForm = () => {
   const {
@@ -81,7 +81,9 @@ const LoginForm = () => {
         />
         <LoginOptions onCheckboxChange={handleCheckboxChange} />
         {(error.email || error.password || registrationError) && (
-          <ErrorText>{error.email || error.password || registrationError}</ErrorText>
+          <ErrorText>
+            {error.email || error.password || registrationError}
+          </ErrorText>
         )}
         <Button onClick={handleFormSubmission}>
           <span className="hover-effect">Login</span>
