@@ -5,6 +5,7 @@ import Signup from "./pages/signup/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import LogInRedirect from "./pages/LogInRedirect";
+import Reset from "./pages/Reset";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
               element={
                 <LogInRedirect>
                   <Signup />
+                </LogInRedirect>
+              }
+            />
+            <Route
+              path="reset"
+              element={
+                <LogInRedirect>
+                  <Reset />
                 </LogInRedirect>
               }
             />
