@@ -12,6 +12,9 @@ export const validateEmail = <T>(
   if (!email || email.trim().length === 0)
     return setError((prevState) => ({
       ...prevState,
+      select: "",
+      password: "",
+      confirmPass: "",
       email: "Please fill in the email field",
     }));
   if (!isEmailValid())
@@ -19,6 +22,7 @@ export const validateEmail = <T>(
       ...prevState,
       select: "", //When email is right, pasword is right, select is wrong, and then password and select are wrong, only the email be highlighted in red not all
       password: "",
+      confirmPass: "",
       email: "Please fill in a correct email",
     }));
 
@@ -33,11 +37,13 @@ export const validatePassword = <T>(
     return setError((prevState) => ({
       ...prevState,
       select: "", //When password is right and select is wrong, then password is wrong, on highlight the password and not select and password
+      confirmPass: "",
       password: "Please fill in the password field",
     }));
   if (password.trim().length < 8)
     return setError((prevState) => ({
       ...prevState,
+      confirmPass: "",
       select: "", //When password is right and select is wrong, then password is wrong, on highlight the password and not select and password
       password: "Password length should be greater than 8",
     }));
