@@ -1,28 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useFetch = <T>(
-  url: string,
-  headers: Headers,
-  handleChange: (data: T) => void,
-) => {
+export const useFetch = <T>(url: string, headers: Headers) => {
+  const [data, setData] = useState<T>();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
-        const response = await fetch(url, { method: "GET", headers });
+        setError("");
+        const response = await fetch(url, {
+          method: "GET",
+          headers,
+          signal: controller.signal,
+        });
         if (!response.ok) {
-          throw new Error("Request failed");
+          setError("Request failed")
         }
         const data = (await response.json()) as T;
-        handleChange(data);
+        setData(data);
       } catch (e) {
-        if (e instanceof Error) {
-          throw new Error(e.message);
-        } else {
-          throw e; // re-throw the error if it's not an instance of Error
-        }
+        if (e instanceof Error && e.name !== "AbortError") setError(e.message);
+      } finally {
+        setIsLoading(false);
       }
     };
-
     void fetchData();
-  }, [handleChange, headers, url]);
+
+    return () => controller.abort()
+  }, [headers, url]);
+
+  return { data, error, isLoading };
 };
