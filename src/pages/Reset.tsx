@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const Reset = () => {
   const {
-    state: { registrationError, users },
+    state: { registrationError },
     dispatch,
   } = useAuth();
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Reset = () => {
   //Resets previous page errors when this page loads
   useLayoutEffect(() => {
     dispatch({ type: ACTION_TYPE.RESET_ERROR });
-  }, [dispatch, users]);
+  }, [dispatch]);
 
   return (
     <div className="mt-14 flex flex-col items-center">
