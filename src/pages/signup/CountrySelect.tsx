@@ -25,7 +25,7 @@ const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
 
   return (
     <div className="space-y-2">
-      <label htmlFor="">Select your nationality:</label>
+      <label htmlFor="select">Select your nationality:</label>
       {fetchError && <ErrorText>{fetchError}</ErrorText>}
       {isLoading && (
         <div className="flex justify-center">
@@ -34,6 +34,7 @@ const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
       )}
       {!isLoading && !fetchError && (
         <select
+        id="select"
           onChange={onChange}
           className={`input ${
             error && "border-red-500"
