@@ -4,7 +4,7 @@ import ErrorText from "../components/ui/ErrorText";
 import Form from "../components/ui/Form";
 import Input from "../components/ui/Input";
 import Logo from "../components/ui/Logo";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import {
   ACTION_TYPE,
@@ -14,21 +14,27 @@ import {
 import { validateEmail, validatePassword } from "../utils/ValidationUtil";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import HeadingText from "../components/ui/HeadingText";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Reset = () => {
   const {
     state: { registrationError, users },
     dispatch,
   } = useAuth();
-console.log(users)
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const initialErrorState = { email: "", password: "" };
   const [error, setError] = useState(initialErrorState);
 
   const emailInputChangeHandler = (e: InputChangeEvent) => {
-    dispatch({ type: "RESET_ERROR" });
+    if (registrationError) {
+      setIsFormSubmitted(false);
+      dispatch({ type: "RESET_ERROR" });
+    }
     error.email && setError(initialErrorState);
     setEmail(e.target.value);
   };
@@ -46,7 +52,16 @@ console.log(users)
     const USER_INPUT = { email, password };
 
     dispatch({ type: ACTION_TYPE.USER_RESET, payload: USER_INPUT });
+    setIsFormSubmitted(true);
   };
+
+  useEffect(() => {
+    if (registrationError) return;
+    if (isFormSubmitted) {
+      toast.success("Password successfully reset");
+      navigate("/login");
+    }
+  }, [registrationError, navigate, isFormSubmitted]);
 
   //Resets previous page errors when this page loads
   useLayoutEffect(() => {
@@ -58,35 +73,35 @@ console.log(users)
       <div className="mb-10">
         <Logo />
       </div>
-        <HeadingText>Reset Password</HeadingText>
-        <Form>
-          <Input
-            error={error.email || registrationError}
-            type="email"
-            label="Enter your email:"
-            onChange={emailInputChangeHandler}
-          />
-          <Input
-            error={error.password}
-            label="Enter new password:"
-            onChange={passwordInputChangeHandler}
-          />
-          {/* <Input
+      <HeadingText>Reset Password</HeadingText>
+      <Form>
+        <Input
+          error={error.email || registrationError}
+          type="email"
+          label="Enter your email:"
+          onChange={emailInputChangeHandler}
+        />
+        <Input
+          error={error.password}
+          label="Enter new password:"
+          onChange={passwordInputChangeHandler}
+        />
+        {/* <Input
           error={error.password || registrationError}
           label="Confirm new password:"
           onChange={passwordInputChangeHandler}
         /> */}
-          {(error.email || error.password || registrationError) && (
-            <ErrorText>
-              {error.email || error.password || registrationError}
-            </ErrorText>
-          )}
-          <Button onClick={handleFormSubmission}>
-            <span className="hover-effect">RESET</span>
-            <FontAwesomeIcon className="hover-effect" icon={faRefresh} />
-          </Button>
-        </Form>
-      </div>
+        {(error.email || error.password || registrationError) && (
+          <ErrorText>
+            {error.email || error.password || registrationError}
+          </ErrorText>
+        )}
+        <Button onClick={handleFormSubmission}>
+          <span className="hover-effect">RESET</span>
+          <FontAwesomeIcon className="hover-effect" icon={faRefresh} />
+        </Button>
+      </Form>
+    </div>
   );
 };
 

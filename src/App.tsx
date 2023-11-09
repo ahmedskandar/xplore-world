@@ -6,10 +6,12 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import LogInRedirect from "./pages/LogInRedirect";
 import Reset from "./pages/Reset";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
+        <Toaster />
       <AuthProvider>
         <BrowserRouter>
           <Routes>

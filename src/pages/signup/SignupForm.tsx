@@ -22,6 +22,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ErrorText from "../../components/ui/ErrorText";
+import toast from "react-hot-toast";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -83,7 +84,10 @@ const SignupForm = () => {
     if (registrationError) {
       return;
     }
-    if (isFormSubmitted) navigate("/login");
+    if (isFormSubmitted) {
+      toast.success("Successfully signed up!");
+      navigate("/login");
+    }
   }, [registrationError, navigate, isFormSubmitted]);
 
   useLayoutEffect(() => {
