@@ -62,12 +62,15 @@ export type AuthAction =
   | { type: "LOGIN"; payload: Omit<Usertype, "nationality"> }
   | { type: "LOGOUT" }
   | { type: "RESET_ERROR"}
+  | {type: "USER_RESET", payload: {email: string, password: string}}
 
 export enum ACTION_TYPE {
   USER_SIGNUP = "SIGN_UP",
   USER_LOGIN = "LOGIN",
   USER_LOGOUT = "LOGOUT",
-  RESET_ERROR = "RESET_ERROR"
+  RESET_ERROR = "RESET_ERROR",
+  USER_RESET = "USER_RESET"
+
 }
 
 export type CountryDataType = {
