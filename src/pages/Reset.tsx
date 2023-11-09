@@ -25,9 +25,10 @@ const Reset = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-  const initialErrorState = { email: "", password: "" };
+  const initialErrorState = { email: "", password: "", confirmPass: "" };
   const [error, setError] = useState(initialErrorState);
 
   const emailInputChangeHandler = (e: InputChangeEvent) => {
@@ -43,11 +44,21 @@ const Reset = () => {
     setPassword(e.target.value);
   };
 
+  const confirmPasswordInputChangeHandler = (e: InputChangeEvent) => {
+     error.confirmPass && setError(initialErrorState);
+     setConfirmPass(e.target.value);
+  }
+
   const handleFormSubmission = (e: FormSubmissionEvent) => {
     e.preventDefault();
 
     if (!validateEmail(email, setError)) return;
     if (!validatePassword(password, setError)) return;
+    if (password !== confirmPass)
+      return setError((prevState) => ({
+        ...prevState,
+        confirmPass: "Passwords not equal",
+      }));
 
     const USER_INPUT = { email, password };
 
@@ -86,14 +97,14 @@ const Reset = () => {
           label="Enter new password:"
           onChange={passwordInputChangeHandler}
         />
-        {/* <Input
-          error={error.password || registrationError}
+        <Input
+          error={error.confirmPass}
           label="Confirm new password:"
-          onChange={passwordInputChangeHandler}
-        /> */}
-        {(error.email || error.password || registrationError) && (
+          onChange={confirmPasswordInputChangeHandler}
+        />
+        {(error.email || error.password || error.confirmPass || registrationError) && (
           <ErrorText>
-            {error.email || error.password || registrationError}
+            {error.email || error.password || error.confirmPass || registrationError}
           </ErrorText>
         )}
         <Button onClick={handleFormSubmission}>
