@@ -70,6 +70,24 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         registrationError: "", // Clear any previous registration error
       };
 
+    case ACTION_TYPE.USER_RESET:
+      userAlreadyRegistered = state.users.some(user => user.email === action.payload.email)
+      if(!userAlreadyRegistered) {
+        return {
+          ...state,
+          registrationError: "Email not found, please try again"
+        }
+      }
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.email === action.payload.email
+            ? { ...user, password: action.payload.password }
+            : user,
+        ),
+        registrationError: ""
+      };
+
     case ACTION_TYPE.USER_LOGIN:
       userAlreadyRegistered = state.users.find(
         (user) =>
@@ -82,7 +100,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
           ...state,
           isLoggedIn: true,
           user: userAlreadyRegistered,
-          registrationError: ""
+          registrationError: "",
         };
       else {
         return {
@@ -99,7 +117,9 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 export const AuthContext = createContext<AuthContextType>({
   state: initialState,
   dispatch: () => {
-    /* Placeholder dispatch function */
+    throw new Error(
+      "Dispatch function cannot be called outside of AuthProvider",
+    );
   },
 });
 
