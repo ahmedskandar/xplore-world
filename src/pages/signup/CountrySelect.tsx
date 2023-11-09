@@ -4,7 +4,7 @@ import { apiKey } from "../../data/constants";
 import { useFetch } from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import Error from "../../components/ui/ErrorText";
+import ErrorText from "../../components/ui/ErrorText";
 
 const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
   if (!onChange) throw new Error("The onChange function should be defined");
@@ -26,7 +26,7 @@ const CountrySelect = ({ onChange, select, error }: NationalitySelect) => {
   return (
     <div className="space-y-2">
       <label htmlFor="">Select your nationality:</label>
-      {fetchError && <Error>{fetchError}</Error>}
+      {fetchError && <ErrorText>{fetchError}</ErrorText>}
       {isLoading && (
         <div className="flex justify-center">
           <FontAwesomeIcon className="animate-spin" icon={faSpinner} />
