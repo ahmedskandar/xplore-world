@@ -19,9 +19,9 @@ import {
   validateSelect,
 } from "../../utils/ValidationUtil";
 import { useEffect, useLayoutEffect, useState } from "react";
-import Error from "../../components/ui/Error";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import ErrorText from "../../components/ui/ErrorText";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -117,9 +117,9 @@ const SignupForm = () => {
           error.password ||
           error.select ||
           registrationError) && (
-          <Error>
+          <ErrorText>
             {error.email || error.password || error.select || registrationError}
-          </Error>
+          </ErrorText>
         )}
         <Button onClick={handleFormSubmission}>
           <span className="hover-effect">Sign up</span>
