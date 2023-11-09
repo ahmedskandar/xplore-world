@@ -1,7 +1,11 @@
 const LoginIllustration = () => {
   return (
-    <div className="order-1 md:order-2 md:basis-1/2">
-      <img className="md:w-full md:h-full" src="/assets/images/plane.jpg" alt="Eye catching flying aeroplane wing image" />
+    <div className="hidden md:block md:basis-1/2">
+      <img
+        className="h-full w-full"
+        src="/assets/images/plane.jpg"
+        alt="Eye catching flying aeroplane wing image"
+      />
     </div>
   );
 };

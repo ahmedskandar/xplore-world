@@ -85,7 +85,7 @@ const LoginForm = () => {
 
   // px-36 py-10sm
   return (
-    <div className="order-2 mx-auto max-w-md px-8 py-8 md:order-1 md:basis-1/2">
+    <div className="mx-auto max-w-md px-8 py-8 md:basis-1/2">
       <div className="mb-10 flex justify-center">
         <Logo />
       </div>
