@@ -40,7 +40,7 @@ const Reset = () => {
     setEmail(e.target.value);
   };
   const passwordInputChangeHandler = (e: InputChangeEvent) => {
-    error.password && setError(initialErrorState);
+    error.password || error.confirmPass && setError(initialErrorState);
     setPassword(e.target.value);
   };
 
@@ -93,7 +93,7 @@ const Reset = () => {
           onChange={emailInputChangeHandler}
         />
         <Input
-          error={error.password}
+          error={error.password || error.confirmPass}
           label="Enter new password:"
           onChange={passwordInputChangeHandler}
         />
