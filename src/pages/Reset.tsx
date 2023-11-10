@@ -16,6 +16,7 @@ import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import HeadingText from "../components/ui/HeadingText";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Chat from "../components/ui/Chat";
 
 const Reset = () => {
   const {
@@ -80,39 +81,48 @@ const Reset = () => {
   }, [dispatch]);
 
   return (
-    <div className="mt-14 flex flex-col items-center">
-      <div className="mb-10">
-        <Logo />
+    <>
+    <Chat />
+      <div className="mt-14 flex flex-col items-center">
+        <div className="mb-10">
+          <Logo />
+        </div>
+        <HeadingText>Reset Password</HeadingText>
+        <Form>
+          <Input
+            error={error.email || registrationError}
+            type="email"
+            label="Enter your email:"
+            onChange={emailInputChangeHandler}
+          />
+          <Input
+            error={error.password || error.confirmPass}
+            label="Enter new password:"
+            onChange={passwordInputChangeHandler}
+          />
+          <Input
+            error={error.confirmPass}
+            label="Confirm new password:"
+            onChange={confirmPasswordInputChangeHandler}
+          />
+          {(error.email ||
+            error.password ||
+            error.confirmPass ||
+            registrationError) && (
+            <ErrorText>
+              {error.email ||
+                error.password ||
+                error.confirmPass ||
+                registrationError}
+            </ErrorText>
+          )}
+          <Button onClick={handleFormSubmission}>
+            <span className="hover-effect">RESET</span>
+            <FontAwesomeIcon className="hover-effect" icon={faRefresh} />
+          </Button>
+        </Form>
       </div>
-      <HeadingText>Reset Password</HeadingText>
-      <Form>
-        <Input
-          error={error.email || registrationError}
-          type="email"
-          label="Enter your email:"
-          onChange={emailInputChangeHandler}
-        />
-        <Input
-          error={error.password || error.confirmPass}
-          label="Enter new password:"
-          onChange={passwordInputChangeHandler}
-        />
-        <Input
-          error={error.confirmPass}
-          label="Confirm new password:"
-          onChange={confirmPasswordInputChangeHandler}
-        />
-        {(error.email || error.password || error.confirmPass || registrationError) && (
-          <ErrorText>
-            {error.email || error.password || error.confirmPass || registrationError}
-          </ErrorText>
-        )}
-        <Button onClick={handleFormSubmission}>
-          <span className="hover-effect">RESET</span>
-          <FontAwesomeIcon className="hover-effect" icon={faRefresh} />
-        </Button>
-      </Form>
-    </div>
+    </>
   );
 };
 
