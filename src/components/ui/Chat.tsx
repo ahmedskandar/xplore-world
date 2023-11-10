@@ -1,21 +1,20 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { InputChangeEvent } from "../../lib/types";
 import { apiKey2 } from "../../data/constants";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([["faBot", " Hey there"]]);
+  const [messages, setMessages] = useState([[]]);
   const [userInput, setUserInput] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [bot, setBot] = useState("bot1");
 
   const handleInputChange = (event: InputChangeEvent) => {
     setUserInput(event.target.value);
   };
+
   const url = "https://lemurbot.p.rapidapi.com/chat";
   const headers = useMemo(() => {
     return new Headers({
@@ -25,15 +24,14 @@ const Chat = () => {
     });
   }, []);
 
-  const userMsg =
-    messages[messages.length - 1][0] === "faUser" &&
-    messages[messages.length - 1][1];
-
-  const body = {
-    bot: "dilly",
-    client: "d531e3bd-b6c3-4f3f-bb58-a6632cbed5e2",
-    message: userMsg,
-  };
+  const url2 = "https://chatgpt-gpt4-ai-chatbot.p.rapidapi.com/ask";
+  const headers2 = useMemo(() => {
+    return new Headers({
+      "content-type": "application/json",
+      "X-RapidAPI-Key": apiKey2 ?? "",
+      "X-RapidAPI-Host": "chatgpt-gpt4-ai-chatbot.p.rapidapi.com",
+    });
+  }, []);
 
   function isDataEmpty(data: unknown): boolean {
     //Return true if data is a string or an array of length 0
@@ -47,8 +45,61 @@ const Chat = () => {
     //Return true if data is falsy in general
     return !data;
   }
+  //   useEffect(() => {
+  //     if (error !== "Request failed") return;
+  //     const controller = new AbortController();
+
+  //     const userMsg2 =
+  //     messages[messages.length - 1][0] === "faUser" &&
+  //     messages[messages.length - 1][1] || "";
+  //     const body2 = {
+  //         query: userMsg2
+  //     }
+
+  //     const fetchData = async () => {
+  //         try {
+  //         setError("");
+  //         const response2 = await fetch(url2, {
+  //             method: "POST",
+  //             body: JSON.stringify(body2),
+  //             headers: headers2,
+  //             signal: controller.signal,
+  //         });
+  //         console.log("error " + error)
+  //         if (!response2.ok) {
+  //           return setError("Api 2 has prob");
+  //         }
+  //         const data: unknown = await response2.json();
+  //         if (isDataEmpty(data)) {
+  //           return setError("Empty data");
+  //         }
+  //         setMessages([...messages, ["faBot", data.response]]);
+  //       } catch (e) {
+  //         if (e instanceof Error && e.name !== "AbortError") setError(e.message);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     };
+  //     void fetchData();
+
+  //     return () => controller.abort();
+  //   }, [error, headers2, messages]);
 
   useEffect(() => {
+    setBot("bot1");
+    const userMsg =
+      messages[messages.length - 1][0] === "faUser" &&
+      messages[messages.length - 1][1];
+
+    const body = {
+      bot: "dilly",
+      client: "d531e3bd-b6c3-4f3f-bb58-a6632cbed5e2",
+      message: userMsg,
+    };
+    const body2 = {
+      query: userMsg || "hey",
+    };
+
     const controller = new AbortController();
     const fetchData = async () => {
       try {
@@ -60,13 +111,27 @@ const Chat = () => {
           signal: controller.signal,
         });
         if (!response.ok) {
-          return setError("Request failed");
+          setBot("bot2");
+          const response2 = await fetch(url2, {
+            method: "POST",
+            body: JSON.stringify({ query: body2 }),
+            headers: headers2,
+            signal: controller.signal,
+          });
+          if (!response2.ok) {
+            setError("All bots expired, try again later");
+            setBot("");
+            return
+          }
+          const data2: unknown = await response2.json();
+          setMessages([...messages, ["faBot", data2.response]]);
+
+          return;
         }
         const data: unknown = await response.json();
         if (isDataEmpty(data)) {
           return setError("Empty data");
         }
-        console.log(data.data.conversation.output);
         setMessages([...messages, ["faBot", data.data.conversation.output]]);
       } catch (e) {
         if (e instanceof Error && e.name !== "AbortError") setError(e.message);
@@ -77,7 +142,7 @@ const Chat = () => {
     void fetchData();
 
     return () => controller.abort();
-  }, [headers, messages]);
+  }, [headers, messages, headers2]);
   //   console.log(body.message)
   //   const body2 = useMemo(() => ({}), []);
   //   const body3 = useMemo(
@@ -107,7 +172,15 @@ const Chat = () => {
         isOpen ? "max-h-screen w-1/4" : "max-h-[3.9rem] w-2/12"
       }`}
     >
-      <header className="flex w-full items-center justify-between rounded-t-md bg-gradient-to-b from-gray-900 to-gray-700 p-3 text-white shadow-md">
+      <header
+        className={`flex w-full items-center justify-between rounded-t-md bg-gradient-to-b  p-3 text-white shadow-md ${
+          bot === "bot1"
+            ? "from-gray-900 to-gray-700"
+            : bot === "bot2"
+            ? "from-yellow-700 to-yellow-500"
+            : "from-red-900 to-red-700"
+        }`}
+      >
         <div className="flex items-center gap-1">
           <img
             src="https://api.dicebear.com/6.x/personas/svg?seed=dilly&size=128"
@@ -128,7 +201,7 @@ const Chat = () => {
           <div
             key={index}
             className={`flex items-center gap-3 ${
-              message[0] === "faUser" ? "bg-gray-200 justify-end pl-5" : "pr-5"
+              message[0] === "faUser" ? "justify-end bg-gray-200 pl-5" : "pr-5"
             }`}
           >
             {message[0] === "faUser" ? (
