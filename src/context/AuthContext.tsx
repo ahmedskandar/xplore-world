@@ -12,7 +12,6 @@ import {
 const users: Usertype[] = [
   { email: "user1@example.com", password: "password1", nationality: "CA" },
   { email: "user2@example.com", password: "password2", nationality: "UK" },
-  { email: "itsahmedlukman@gmail.com", password: "Mamatash@2003", nationality: "KE" },
   // Add more users as needed
 ];
 
