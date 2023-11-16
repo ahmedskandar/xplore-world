@@ -12,6 +12,7 @@ import {
 const users: Usertype[] = [
   { email: "user1@example.com", password: "password1", nationality: "CA" },
   { email: "user2@example.com", password: "password2", nationality: "UK" },
+  { email: "itsahmedlukman@gmail.com", password: "Mamatash@2003", nationality: "KE" },
   // Add more users as needed
 ];
 
@@ -23,7 +24,7 @@ const initialState: AuthState = {
   registrationError: "",
 };
 
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+const authReducer = (state: AuthState, action: AuthAction) => {
   let userAlreadyRegistered;
   switch (action.type) {
     case ACTION_TYPE.USER_SIGNUP:
@@ -31,33 +32,14 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       userAlreadyRegistered = state.users.some(
         (user) => user.email === action.payload.email,
       );
-
-      //    userAlreadyRegistered
-      //     ?  alert("Error: user has already reg") : alert("New user Proceed")
-
-      //This condition works as expected
-      //   return userAlreadyRegistered
-      //     ? {
-      //         ...state,
-      //         registrationError:
-      //           "Email is already registered. Please use a different email.",
-      //       }
-      //     : {
-      //         ...state,
-      //         users: [...state.users, action.payload],
-      //         registrationError: "", // Clear any previous registration error
-      //       };
-
       //This condition works as expected
       if (userAlreadyRegistered) {
-        // alert("User has already registered");
         return {
           ...state,
           registrationError:
             "Email already registered, please use a different email.",
         };
       } else {
-        // alert("New user proceed");
         return {
           ...state,
           users: [...state.users, action.payload],
@@ -132,40 +114,3 @@ export const AuthProvider = ({ children }: ChildrenPropsType) => {
     </AuthContext.Provider>
   );
 };
-
-// import { createContext, useContext } from "react";
-// import { ChildrenPropsType } from "../lib/types";
-
-// const AuthContext = createContext()
-
-// const AuthProvider = ({children}: ChildrenPropsType) => {
-//     return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
-// }
-
-// const useAuth = () => useContext(AuthContext)
-
-// export {AuthProvider, useAuth}
-
-//  case "SIGN_UP":
-//     // Add a new user to the array
-//     return {
-//       ...state,
-//       users: [...state.users, action.payload],
-//     };
-//   case "LOGIN":
-//     // Check if the user exists in the array
-//     const { email, password } = action.payload;
-//     user = users.find((u) => u.email === email && u.password === password);
-//     return {
-//       ...state,
-//       user: user || null,
-//       isLoggedIn: !!user,
-//     };
-//   case "LOGOUT":
-//     return {
-//       ...state,
-//       user: null,
-//       isLoggedIn: false,
-//     };
-//   default:
-//     return state;
