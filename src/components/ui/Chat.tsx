@@ -5,7 +5,9 @@ import { InputChangeEvent } from "../../lib/types";
 import { apiKey2 } from "../../data/constants";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([[]]);
+  const [messages, setMessages] = useState([
+    ["faBot", "Hey"],
+  ]);
   const [userInput, setUserInput] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -96,9 +98,6 @@ const Chat = () => {
       client: "d531e3bd-b6c3-4f3f-bb58-a6632cbed5e2",
       message: userMsg,
     };
-    const body2 = {
-      query: userMsg || "hey",
-    };
 
     const controller = new AbortController();
     const fetchData = async () => {
@@ -110,31 +109,14 @@ const Chat = () => {
           headers,
           signal: controller.signal,
         });
-        if (!response.ok) {
-          setBot("bot2");
-          const response2 = await fetch(url2, {
-            method: "POST",
-            body: JSON.stringify({ query: body2 }),
-            headers: headers2,
-            signal: controller.signal,
-          });
-          if (!response2.ok) {
-            setError("All bots expired, try again later");
-            setBot("");
-            return
-          }
-          const data2: unknown = await response2.json();
-          setMessages([...messages, ["faBot", data2.response]]);
-
-          return;
-        }
+        
         const data: unknown = await response.json();
         if (isDataEmpty(data)) {
           return setError("Empty data");
         }
         setMessages([...messages, ["faBot", data.data.conversation.output]]);
       } catch (e) {
-        if (e instanceof Error && e.name !== "AbortError") setError(e.message);
+        // if (e instanceof Error && e.name !== "AbortError") setError(e.message);
       } finally {
         setIsLoading(false);
       }
@@ -142,7 +124,7 @@ const Chat = () => {
     void fetchData();
 
     return () => controller.abort();
-  }, [headers, messages, headers2]);
+  }, [headers, messages]);
   //   console.log(body.message)
   //   const body2 = useMemo(() => ({}), []);
   //   const body3 = useMemo(
@@ -168,8 +150,8 @@ const Chat = () => {
 
   return (
     <div
-      className={`absolute bottom-8 right-12 overflow-hidden rounded-md shadow-md transition-all duration-500 ${
-        isOpen ? "max-h-screen w-1/4" : "max-h-[3.9rem] w-2/12"
+      className={`absolute z-30 right-10 bottom-10  overflow-hidden rounded-md shadow-md transition-all duration-500 ${
+        isOpen ? "max-h-screen w-[350px]" : "max-h-[3.9rem] w-[250px]"
       }`}
     >
       <header
