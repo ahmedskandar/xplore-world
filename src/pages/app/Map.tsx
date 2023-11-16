@@ -1,13 +1,12 @@
 import { LatLngExpression } from "leaflet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Chat from "../../components/ui/Chat";
 
 const Map = () => {
   //eslint-disable-next-line
-  const [mapPosition, setMapPosition] = useState<LatLngExpression>([
-    51.505, -0.09,
-  ]);
+  const [mapPosition, setMapPosition] = useState<LatLngExpression>([0,0]);
+  useEffect(() => setMapPosition([51.505, -0.09]), []);
   return (
     <>
       <div className="relative basis-2/3">
