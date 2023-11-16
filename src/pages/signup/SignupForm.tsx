@@ -16,7 +16,6 @@ import {
 import {
   validateEmail,
   validatePassword,
-  validateSelect,
 } from "../../utils/ValidationUtil";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +62,6 @@ const SignupForm = () => {
 
     if (!validateEmail(email, setError)) return;
     if (!validatePassword(password, setError)) return;
-    if (!validateSelect(select, setError)) return;
 
     const userInput = {
       email,
@@ -119,10 +117,9 @@ const SignupForm = () => {
         />
         {(error.email ||
           error.password ||
-          error.select ||
           registrationError) && (
           <ErrorText>
-            {error.email || error.password || error.select || registrationError}
+            {error.email || error.password || registrationError}
           </ErrorText>
         )}
         <Button onClick={handleFormSubmission}>
