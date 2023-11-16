@@ -7,11 +7,14 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import LogInRedirect from "./pages/LogInRedirect";
 import Reset from "./pages/Reset";
 import { Toaster } from "react-hot-toast";
+import AppLayout from "./pages/app/AppLayout";
+import AppForm from "./pages/app/AppForm";
+import AppTravel from "./pages/app/AppTravel";
 
 function App() {
   return (
     <>
-        <Toaster />
+      <Toaster />
       <AuthProvider>
         <BrowserRouter>
           <Routes>
@@ -51,13 +54,13 @@ function App() {
               path="app"
               element={
                 <ProtectedRoute>
-                  <p>WELCOME TO THE TRAVEL APP</p>
+                  <AppLayout />
                 </ProtectedRoute>
               }
             >
               <Route index element={<Navigate to={"travels"} replace />} />
-              <Route path="form" element={<></>} />
-              <Route path="travels" element={<></>} />
+              <Route path="form" element={<AppForm />} />
+              <Route path="travels" element={<AppTravel />} />
             </Route>
             <Route path="*" element={<></>} />
           </Routes>
