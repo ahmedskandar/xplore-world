@@ -5,7 +5,9 @@ import Chat from "../../components/ui/Chat";
 
 const Map = () => {
   //eslint-disable-next-line
-  const [mapPosition, setMapPosition] = useState<LatLngExpression>([0,0]);
+  const [mapPosition, setMapPosition] = useState<LatLngExpression>([
+    51.505, -0.09,
+  ]);
   useEffect(() => setMapPosition([51.505, -0.09]), []);
   return (
     <>
