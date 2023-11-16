@@ -26,15 +26,6 @@ const Chat = () => {
     });
   }, []);
 
-  const url2 = "https://chatgpt-gpt4-ai-chatbot.p.rapidapi.com/ask";
-  const headers2 = useMemo(() => {
-    return new Headers({
-      "content-type": "application/json",
-      "X-RapidAPI-Key": apiKey2 ?? "",
-      "X-RapidAPI-Host": "chatgpt-gpt4-ai-chatbot.p.rapidapi.com",
-    });
-  }, []);
-
   function isDataEmpty(data: unknown): boolean {
     //Return true if data is a string or an array of length 0
     if (typeof data === "string" || Array.isArray(data)) {
@@ -109,11 +100,12 @@ const Chat = () => {
           headers,
           signal: controller.signal,
         });
-        
-        const data: unknown = await response.json();
+        //eslint-disable-next-line
+        const data = await response.json();
         if (isDataEmpty(data)) {
           return setError("Empty data");
         }
+        //eslint-disable-next-line
         setMessages([...messages, ["faBot", data.data.conversation.output]]);
       } catch (e) {
         // if (e instanceof Error && e.name !== "AbortError") setError(e.message);
